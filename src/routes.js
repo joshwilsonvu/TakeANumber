@@ -1,26 +1,28 @@
 module.exports = app => {
+
   // Handle POST to create a admin session (i.e. log on)
-  let newSession = (req, res) => {
-    if (!req.body || !req.body.primary_email || !req.body.password) {
+  app.post("/v1/session", (req, res) => {
+    if (!req.body || !req.body.email || !req.body.password) {
       res.status(400).send({error: "Email and password required."});
       return;
     }
-    let admin = app.admins.find(admin => admin.primary_email === req.body.primary_email);
+    let admin = app.admins.find(admin => admin.email === req.body.email);
     if (!admin || admin.password !== req.body.password) {
       res.status(401).send({error: "Incorrect email or password."});
       return;
     }
     res.status(201).send({
-      email: admin.primary_email
+      email: admin.email
     });
-  };
+  });
 
   // Handle POST to create a new admin account
-  let newAdmin = (req, res) => {
+  app.post("/v1/admin", (req, res) => {
+    console.log(req.responseText);
     let data = req.body;
     if (
       !data ||
-      !data.primary_email ||
+      !data.email ||
       !data.password ||
       !data.first_name ||
       !data.last_name
@@ -30,14 +32,14 @@ module.exports = app => {
       });
       return;
     }
-    let admin = app.admins.find(admin => admin.primary_email === data.primary_email);
+    let admin = app.admins.find(admin => admin.email === data.email);
     if (admin) {
       res.status(400).send({error: "Email already in use."});
       return;
     }
     let adminToAdd = _.pick(
       data,
-      "primary_email",
+      "email",
       "password",
       "first_name",
       "last_name",
@@ -45,37 +47,37 @@ module.exports = app => {
     );
     app.admins.push(adminToAdd);
     res.status(201).send({
-      primary_email: data.primary_email
+      email: data.email
     });
-  };
+  });
 
   // Handle GET to fetch admin information
-  let getAdmin = (req, res) => {
-    let admin = app.admins.find(admin => admin.primary_email === req.params.primary_email);
+  app.get("/v1/admin/:email", (req, res) => {
+    const email = decodeURIComponent(req.params.email);
+    let admin = app.admins.find(admin => admin.email === email);
     if (!admin) {
       res.status(404).send({error: "Unknown email address."});
     } else {
-      admin = _.pick(
-        admin,
-        "primary_email",
-        "first_name",
-        "last_name",
+      admin = {
+        email: admin.email,
+        first_name: admin.first_name,
+        last_name: admin.last_name
         // TODO: include "image"
-      );
+      };
       res.status(200).send(admin);
     }
-  };
+  });
 
   // Handle DELETE to remove an admin
-  let deleteAdmin = (req, res) => {
-    let ind = app.admins.findIndex(admin => admin.primary_email === req.params.primary_email);
+  app.delete("/v1/admin", (req, res) => {
+    let ind = app.admins.findIndex(admin => admin.email === req.params.email);
     if (ind !== -1) {
       app.admins.splice(ind, 1); // remove admin
     }
-  };
+  });
 
   // Handle POST to create a new organization
-  let newOrg = (req, res) => {
+  app.post("/v1/org", (req, res) => {
     let data = req.body;
     if (!data || !data.name) {
       // TODO add more fields
@@ -94,33 +96,24 @@ module.exports = app => {
     res.status(201).send({
       name: org.name
     });
-  };
+  });
 
   // Handle GET to fetch org information
-  let getOrg = (req, res) => {
+  app.get("/v1/org/", (req, res) => {
     let org = app.orgs.find(org => org.name === req.params.name);
     if (!org) {
       res.status(404).send({error: "Unknown organization name."});
     } else {
       res.status(200).send(org);
     }
-  };
+  });
 
   // Handle DELETE to remove an organization
-  let deleteOrg = (req, res) => {
+  app.delete("/v1/org/", (req, res) => {
     let ind = app.orgs.findIndex(org => org.name === req.params.name);
     if (ind !== -1) {
       app.orgs.splice(ind, 1); // remove admin
     }
-  };
-
-  app.post("/v1/session", newSession);
-
-  app.post("/v1/admin", newAdmin);
-  app.get("/v1/admin/:primary_email", getAdmin);
-  app.delete("/v1/admin/:primary_email", deleteAdmin);
-
-  app.post("/v1/org", newOrg);
-  app.get("/v1/org/:name", getOrg);
-  app.delete("/v1/org/:name", deleteOrg);
+  });
 };
+

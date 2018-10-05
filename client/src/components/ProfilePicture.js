@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import mp from "../img/mp.png";
 
 class ProfilePicture extends Component {
   constructor(props) {
@@ -7,18 +8,15 @@ class ProfilePicture extends Component {
   }
 
   getSrc() {
-    return this.props.src;
+    return mp;
+    //return this.props.src;
   }
 
   render() {
     return (
-      <img src={this.getSrc()} width="128px" alt="Profile Picture" className="border border-primary rounded"/>
+      <img src={this.getSrc()} alt="Profile" className="pure-img"/>
     );
   }
 }
-
-ProfilePicture.contextTypes = {
-  src: React.PropTypes.string.isRequired
-};
 
 export {ProfilePicture};

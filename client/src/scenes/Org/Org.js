@@ -5,9 +5,12 @@ class Org extends Component {
   render() {
     console.log(this.props);
     return (
-      <div className="offset-sm-2 col-sm-8 mt-3">
-        <h2>{this.props.name}</h2>
-        <hr/>
+      <div className="pure-g-r">
+        <div className="pure-u-sm-1-6">&nbsp;</div>
+        <div className="pure-u-sm-2-3">
+          <h2>{this.props.name}</h2>
+          <hr/>
+        </div>
       </div>
     );
   }

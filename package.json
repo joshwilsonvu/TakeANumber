@@ -5,7 +5,9 @@
   "main": "src/server.js",
   "dependencies": {
     "concurrently": "^4.0.1",
+    "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.3",
+    "helmet": "^3.13.0",
     "mongo": "^0.1.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
@@ -17,7 +19,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "concurrently --kill-others \"nodemon --watch src\" \"cd client && npm start\"",
+    "start": "concurrently --kill-others \"sass --watch client/src/scss/:client/src/css/\" \"nodemon --watch src\" \"cd client && npm start\"",
     "test": "npm run test"
   },
   "author": "Josh Wilson",

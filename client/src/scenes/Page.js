@@ -4,6 +4,7 @@ import {Landing} from "./Landing/Landing" // landing page
 import {Profile} from "./Profile/Profile" // profile page
 import {Org} from "./Org/Org"; // org page
 import {NotFound} from "./NotFound/NotFound"; // page not found
+import "../css/index.css";
 
 /**
  * Because this single page app is so simple, it is sufficient to switch
@@ -12,24 +13,29 @@ import {NotFound} from "./NotFound/NotFound"; // page not found
  *
  * @returns the jsx to be rendered
  */
-export function Page(props) {
+let Page = props => {
   return (
-    <div className="container">
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Landing}/>
-          <Route path="/profile/:primary_email" render={props =>
-            <Profile primary_email={props.match.params.primary_email}/>
-          }/>
-          <Route path="/org/:name" render={props =>
-            <Org name={props.match.params.name}/>
-          }/>
-          <Route component={NotFound}/>
-        </Switch>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Landing}/>
+        <Route exact path="/profile/" render={props =>
+          <Profile {...props} email="joshua.wilson@vanderbilt.edu"/>
+        }/>
+        <Route path="/profile/:email" render={props =>
+          <Profile {...props} email={decodeURIComponent(props.match.params.email)}/>
+        }/>
+        <Route path="/org/:name" render={props =>
+          <Org {...props} name={props.match.params.name}/>
+        }/>
+        <Route path="/404" component={NotFound}/>
+        <Route component={NotFound}/>
+      </Switch>
+    </BrowserRouter>
   );
-}
+};
+
+export { Page };
+
 
 
 /*
