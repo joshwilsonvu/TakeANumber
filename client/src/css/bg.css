@@ -5,10 +5,10 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -10;
 }
 
 /*# sourceMappingURL=bg.css.map */
