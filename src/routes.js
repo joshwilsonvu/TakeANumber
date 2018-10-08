@@ -73,6 +73,9 @@ module.exports = app => {
     let ind = app.admins.findIndex(admin => admin.email === req.params.email);
     if (ind !== -1) {
       app.admins.splice(ind, 1); // remove admin
+      res.status(204).send();
+    } else {
+      res.status(404).send({error: "Unknown email address."})
     }
   });
 
@@ -113,7 +116,22 @@ module.exports = app => {
     let ind = app.orgs.findIndex(org => org.name === req.params.name);
     if (ind !== -1) {
       app.orgs.splice(ind, 1); // remove admin
+      res.status(204).send();
+    } else {
+      res.status(404).send({error: "Unknown organization name."})
     }
+  });
+
+  // Handle POST to search organizations
+  app.post("/v1/org-search/", (req, res) => {
+    let data = req.body;
+    console.log(data);
+    if (!data || !data.search) {
+      res.status(400).send({error: "name field required"});
+      return;
+    }
+    let orgs = app.orgs.filter(org => org.name.startsWith(data.search)).map(org => org.name);
+    res.status(200).send(orgs);
   });
 };
 

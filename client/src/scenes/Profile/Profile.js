@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import {Org} from "../Org/Org";
 import {ProfilePicture} from "../../components/ProfilePicture";
-import {Ajax} from "../../services/Ajax";
+import {ajax} from "../../services/Ajax";
 
 /**
  * Profiles should be accessible by any user, logged in as an admin or not,
@@ -15,7 +15,7 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = { info: {}, error: false };
-    Ajax(`/v1/admin/${encodeURIComponent(this.props.email)}`, {
+    ajax(`/v1/admin/${encodeURIComponent(this.props.email)}`, {
       method: "GET",
       responseType: "json",
     }).then(response => {

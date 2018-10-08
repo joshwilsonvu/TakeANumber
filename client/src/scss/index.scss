@@ -1,5 +1,5 @@
 @import "base.scss";
-@import "grids.scss";
+@import "pure.scss";
 @import "grids-responsive.scss";
 
 /*
@@ -36,8 +36,6 @@ body {
   font-size: $base-font-size;
   font-family: $base-font-family;
   font-weight: $base-font-weight;
-  //margin: 8px;
-  //padding: 30px;
   line-height: 1.6;
 }
 

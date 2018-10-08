@@ -16,13 +16,14 @@ if (env !== "test") {
 }
 app.set("views", __dirname);
 app.use(express.static(path.join(__dirname, "../client/public")));
+app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieSession({
   name: 'sessionID',
   keys: ['asdfD^J9d#aDa*', '/T&vuE9d3X%jw', 'h4%a8UbOe#z'],
   cookie: {
     secure: true,
-    httpOnly: true,
+    //httpsOnly: true,
     path: '/',
     expires: new Date(Date.now() + 1000 * 60 * 60 * 3) // 3-hour session
   }
