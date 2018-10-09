@@ -8,4 +8,4 @@ class OrgBody extends Component {
   }
 }
 
-export { OrgBody };
+export {OrgBody};

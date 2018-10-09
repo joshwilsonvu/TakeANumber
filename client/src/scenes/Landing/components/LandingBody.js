@@ -8,4 +8,4 @@ class LandingBody extends Component {
   }
 }
 
-export { LandingBody };
+export {LandingBody};

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {debounce} from "../services/Debounce";
-import {ajax} from "../services/Ajax";
+import {debounce} from '../services/Debounce';
+import {ajax} from '../services/Ajax';
+
 
 class SearchResults extends Component {
   constructor(props) {
@@ -20,26 +21,28 @@ class SearchResults extends Component {
 
   load() {
     if (this.props.search) {
-      ajax(this.props.url, {
-        method: "post",
-        responseType: "json",
-        data: {
-          search: this.props.search
-        }
+      this.setState({loaded: false});
+      ajax(this.props.url + encodeURIComponent(this.props.search), {
+        method: 'get',
+        responseType: 'json',
       }).then(response => {
-        this.setState({results: response});
+        this.setState({results: response, loaded: true});
       }).catch(err => {
-        this.setState({results: []});
+        this.setState({results: [], loaded: true});
       });
+    } else {
+      this.setState({results: [], loaded: true});
     }
   }
 
   render() {
     console.log(this.state.results);
-    return (
+    return this.state.loaded ? (
       <ul>
-        {this.state.results.map(result => <li key={result}><a href={"/org/"+result}>{result}</a></li>)}
+        {this.state.results.map(result => <li key={result}><a href={'/org/' + result}>{result}</a></li>)}
       </ul>
+    ) : (
+      <p><i>Loading...</i></p>
     );
   }
 }

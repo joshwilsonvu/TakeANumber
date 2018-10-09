@@ -1,10 +1,10 @@
 import React from 'react'
-import {BrowserRouter, Route, Switch} from "react-router-dom";
-import {Landing} from "./Landing/Landing" // landing page
-import {Profile} from "./Profile/Profile" // profile page
-import {Org} from "./Org/Org"; // org page
-import {NotFound} from "./NotFound/NotFound"; // page not found
-import "../css/index.css";
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Landing} from './Landing/Landing' // landing page
+import {Profile} from './Profile/Profile' // profile page
+import {Org} from './Org/Org'; // org page
+import {NotFound} from './NotFound/NotFound'; // page not found
+import '../css/index.css';
 
 /**
  * Because this single page app is so simple, it is sufficient to switch
@@ -34,8 +34,7 @@ let Page = props => {
   );
 };
 
-export { Page };
-
+export {Page};
 
 
 /*

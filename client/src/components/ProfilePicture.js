@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import mp from "../img/mp.png";
+import mp from '../img/mp.png';
 
 class ProfilePicture extends Component {
   constructor(props) {

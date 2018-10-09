@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import {Org} from "../Org/Org";
-import {ProfilePicture} from "../../components/ProfilePicture";
-import {ajax} from "../../services/Ajax";
+import {Org} from '../Org/Org';
+import {ProfilePicture} from '../../components/ProfilePicture';
+import {ajax} from '../../services/Ajax';
 
 /**
  * Profiles should be accessible by any user, logged in as an admin or not,
@@ -14,10 +14,10 @@ import {ajax} from "../../services/Ajax";
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = { info: {}, error: false };
+    this.state = {info: {}, error: false};
     ajax(`/v1/admin/${encodeURIComponent(this.props.email)}`, {
-      method: "GET",
-      responseType: "json",
+      method: 'GET',
+      responseType: 'json',
     }).then(response => {
       console.log(response);
       this.setState({
@@ -25,10 +25,11 @@ class Profile extends Component {
         error: false
       });
     }).catch(response => {
-      this.setState({ error: true });
+      this.setState({error: true});
     });
 
   }
+
   render(props) {
     return !this.state.error ? (
       <div className="pure-g-r root">
@@ -52,4 +53,4 @@ Org.propTypes = {
   email: PropTypes.string.isRequired
 };
 
-export { Profile };
+export {Profile};
